@@ -1,38 +1,38 @@
 const questions = [
     {
-        question: "Which characteristics are suitable for an abstract class?",
+        question: "What is a primary key?",
         answers: [
-            { text: "An abstract class can not be instantiated and it is forbidden for it to have a constructor", correct: false},
-            { text: "An abstract class can not be instantiated. It is possible for an abstract class to contain both attributes and methods", correct: true},
-            { text: "Abstract classes are the same as interfaces.", correct: false},
-            { text: "Abstract classes can not be instantiated and they have only virtual methods, which enable abstraction.", correct: false}
+            { text: "A unique identifier for each record in a database table, ensuring no two rows have the same value in this column.", correct: true},
+            { text: "A visual key used primarily in graphical user interfaces to navigate between fields.", correct: false},
+            { text: "A special keyword in programming languages to give primary importance to a variable or function.", correct: false},
+            { text: "An encryption key that is primarily used before all other keys.", correct: false}
         ]
     },
     {
-        question: "What does OOP stand for?",
+        question: "What does SQL stand for?",
         answers: [
-            { text: "Object Oriented Paradigm", correct: false},
-            { text: "Outstanding Object Protocol", correct: false},
-            { text: "Online Operation Processing", correct: false},
-            { text: "Object Oriented Programming", correct: true}
+            { text: "Sequential Query Language", correct: false},
+            { text: "Standard Query List", correct: false},
+            { text: "Simple Query Language", correct: false},
+            { text: "Structured Query Language", correct: true}
         ]
     },
     {
         question: "Which sentence defines inheritance?",
         answers: [
-            { text: "A programming feature that isolates individual features in a standalone module", correct: false},
-            { text: "The process of optimizing ode to run more efficiently", correct: false},
-            { text: "A concept where a class acquires the properties and behaviors of another class", correct: true},
-            { text: "The practice of copying code from one part of the program to another", correct: false}
+            { text: "A collection of interconnected web pages designed to display information.", correct: false},
+            { text: "A structured set of data held in a computer, especially one that is accessible in various ways.", correct: true},
+            { text: "A system used to manage and organize desktop icons and applications.", correct: false},
+            { text: "An online platform for social media interaction and content sharing.", correct: false}
         ]
     },
     {
-        question: "Which sentence describes method overriding?",
+        question: "What is the difference between DDL and DML?",
         answers: [
-            { text: "Creating a method in a child class with the same name and parameters as a method in the parent class, allowing the child class to provide its own implementation.", correct: true},
-            { text: "Increasing the efficiency of a method by changing its algorithm while keeping its functionality the same.", correct: false},
-            { text: "Extending the functionality of a method by adding new parameters to it.", correct: false},
-            { text: "Copying the behavior of a method from one class to another unrelated class.", correct: false}
+            { text: "DML (Data Manipulation Language) is used for managing data within schema objects, while DDL (Data Definition Language) is used for defining and modifying the database structure. ", correct: true},
+            { text: "DML stands for Database Modeling Language, used for designing database schemas, and DDL stands for Data Deployment Language, used for deploying database changes.", correct: false},
+            { text: "DML is used for creating connections to databases, and DDL is used for disconnecting from databases.", correct: false},
+            { text: "There is no significant difference; DML and DDL are interchangeable terms used in SQL.", correct: false}
         ]
     }
 ]
@@ -111,8 +111,6 @@ function showScore() {
     resetState();
     questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
 
-    saveScoreToDatabase(score);
-
     const retryButton = document.createElement("button");
     retryButton.innerHTML = "Take the quiz again.";
     retryButton.classList.add("btn");
@@ -125,30 +123,10 @@ function showScore() {
     homeButton.innerHTML = "Back to Home Page";
     homeButton.classList.add("btn");
     homeButton.onclick = function() {
-        window.location.href = 'homePage.html';
+        window.location.href = 'index.html';
     };
     answerButtons.appendChild(homeButton);
 }
-
-function saveScoreToDatabase(score) {
-    const loggedInUser = getLoggedInUser();
-
-    const dbRef = ref(db, 'quizResults/' + loggedInUser);
-    const newScoreEntry = push(dbRef);
-    set(newScoreEntry, {
-        score: score,
-        timestamp: Date.now()
-    }).then(() => {
-        console.log("Score saved successfully.");
-    }).catch((error) => {
-        console.error("Error saving score: ", error);
-    });
-}
-
-function getLoggedInUser() {
-    return localStorage.getItem('loggedInUser');
-}
-
 
 
 function handleNextButton() {
